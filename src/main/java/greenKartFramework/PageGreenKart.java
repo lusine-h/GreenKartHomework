@@ -4,10 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-
+import java.util.List;
 
 public class PageGreenKart {
     protected WebDriver driver;
@@ -17,14 +14,20 @@ public class PageGreenKart {
         this.driver = driver;
     }
 
-    @FindBy(css = "//*[@id=\"root\"]/div/div[1]/div/div[18]/div[3]/button")
-    private WebElement mango;
+    public void addToCart() {
+        String addItem = "Mango";
+        List<WebElement> listOfItems = driver.findElements(By.cssSelector("h4.product-name"));
+        for (int i = 0; i < listOfItems.size(); i++) {
+            listOfItems = driver.findElements(By.cssSelector("h4.product-name"));
+            String[] productName = listOfItems.get(i).getText().split("-");
+            String trimName = productName[0].trim();
 
-    public void addMangoToCart(){
-        jse = (JavascriptExecutor) driver;
-        jse.executeScript("0, document.body.scrollHeight");
-        mango.click();
-
+           if (addItem.equals(trimName)) {
+                System.out.println(trimName);
+                WebElement addMango = driver.findElement(By.xpath("//following::div[2]/button[text()='ADD TO CART']"));
+                addMango.click();
+            }
+        }
     }
-
 }
+
