@@ -18,14 +18,10 @@ package greenKartTests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebElement;
-
 import static greenKartTests.Constants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestGreenKart extends BaseTest{
-
 
     @Test
     @DisplayName("Assert URL")
@@ -40,11 +36,14 @@ public class TestGreenKart extends BaseTest{
         String actualTitle = driver.getTitle();
         assertEquals(EXPECTED_TITLE,actualTitle);
     }
+
     @Test
     @DisplayName("Assert Add to Cart")
     public void addMangoToCart(){
         homepage.addToCart();
-
-
+        String qty = homepage.findItemsQty();
+        String price = homepage.findItemPrice();
+        assertEquals(qty, "1");
+        assertEquals(price, "75");
     }
 }
