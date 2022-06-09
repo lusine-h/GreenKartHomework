@@ -1,7 +1,6 @@
 package greenKartFramework;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import java.util.List;
@@ -10,14 +9,16 @@ public class PageGreenKart {
 
     protected WebDriver driver;
 
+    //Constructor
     public PageGreenKart(WebDriver driver) {
-        this.driver = driver;
+       this.driver = driver;
     }
-    //private final By itemsQty = By.xpath("//div[@class = 'cart-info']//td[3]//strong");
-    private final By itemsQty = By.cssSelector("div.cart-info tr:nth-child(1) > td:nth-child(3) > strong");
-   // private final By priceItem = By.xpath("//div[@class = 'cart-info']//tr[2]/td[3]/strong");
-   private final By priceItem = By.cssSelector("div.cart-info tr:nth-child(2) > td:nth-child(3) > strong");
 
+    //Locate Elements
+    private final By itemsQty = By.cssSelector("div.cart-info tr:nth-child(1) > td:nth-child(3) > strong");
+    private final By priceItem = By.cssSelector("div.cart-info tr:nth-child(2) > td:nth-child(3) > strong");
+
+    //Add Mango To The Cart
     public void addToCart() {
         String addItem = "Mango";
         List<WebElement> listOfItems = driver.findElements(By.cssSelector("h4.product-name"));
@@ -32,11 +33,13 @@ public class PageGreenKart {
             }
         }
     }
-    public String findItemsQty(){
+
+
+    public String getItemsQty(){
         WebElement findItemQty = driver.findElement(itemsQty);
         return findItemQty.getText();
     }
-    public String findItemPrice(){
+    public String getItemPrice(){
         WebElement findItemPrice = driver.findElement(priceItem);
         return findItemPrice.getText();
     }

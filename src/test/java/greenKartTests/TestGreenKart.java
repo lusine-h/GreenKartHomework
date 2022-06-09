@@ -24,25 +24,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestGreenKart extends BaseTest{
 
     @Test
-    @DisplayName("Assert URL")
+    @DisplayName("URL")
     public void testURL(){
         String actualURL = driver.getCurrentUrl();
         assertEquals(MAIN_URL,actualURL);
     }
 
     @Test
-    @DisplayName("Assert Title")
+    @DisplayName("Title")
     public void testTitle(){
         String actualTitle = driver.getTitle();
         assertEquals(EXPECTED_TITLE,actualTitle);
     }
 
     @Test
-    @DisplayName("Assert Add to Cart")
+    @DisplayName("Add Mango to the Cart")
     public void addMangoToCart(){
         homepage.addToCart();
-        String qty = homepage.findItemsQty();
-        String price = homepage.findItemPrice();
+        String qty = homepage.getItemsQty();
+        String price = homepage.getItemPrice();
         assertEquals(qty, "1");
         assertEquals(price, "75");
     }
