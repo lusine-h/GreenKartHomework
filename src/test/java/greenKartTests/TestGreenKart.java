@@ -18,8 +18,11 @@ package greenKartTests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
+
 import static greenKartTests.Constants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestGreenKart extends BaseTest{
 
@@ -46,4 +49,17 @@ public class TestGreenKart extends BaseTest{
         assertEquals(qty, "1");
         assertEquals(price, "75");
     }
+
+    @Test
+    @DisplayName("Click on Cart Icon")
+    public void clickOnCartIcon(){
+        homepage.addToCart();
+        homepage.getCartIcon();
+        assertTrue(homepage.getModalContentImage().isDisplayed());
+        assertEquals(homepage.getModalContentText().getText(),"Mango - 1 Kg");
+        assertEquals(homepage.getModalContentQty().getText(), "1 No.");
+        assertEquals(homepage.getModalContentPrice().getText(),"75");
+        assertEquals(homepage.getModalContentAmount().getText(),"75");
+    }
+
 }

@@ -17,6 +17,16 @@ public class PageGreenKart {
     //Locate Elements
     private final By itemsQty = By.cssSelector("div.cart-info tr:nth-child(1) > td:nth-child(3) > strong");
     private final By priceItem = By.cssSelector("div.cart-info tr:nth-child(2) > td:nth-child(3) > strong");
+    private final By cartIcon = By.cssSelector("a.cart-icon");
+    private final By modalContainer = By.cssSelector("div.cart-preview.active");
+    private final By modalContentImage = By.xpath(".//img[@src = './images/mango.jpg']");
+    private final By modalContentText = By.xpath(".//p[text()= 'Mango - 1 Kg']");
+    private final By modalContentQty = By.cssSelector("p.quantity");
+    private final By modalContentPrice = By.cssSelector("p.product-price");
+    private final By modalContentAmount = By.cssSelector("p.amount");
+
+
+
 
     //Add Mango To The Cart
     public void addToCart() {
@@ -34,15 +44,43 @@ public class PageGreenKart {
         }
     }
 
-
     public String getItemsQty(){
-        WebElement findItemQty = driver.findElement(itemsQty);
-        return findItemQty.getText();
+        WebElement getItemQty = driver.findElement(itemsQty);
+        return getItemQty.getText();
     }
     public String getItemPrice(){
-        WebElement findItemPrice = driver.findElement(priceItem);
-        return findItemPrice.getText();
+        WebElement getItemPrice = driver.findElement(priceItem);
+        return getItemPrice.getText();
+    }
+    public void getCartIcon(){
+        WebElement getCartIcon = driver.findElement(cartIcon);
+        getCartIcon.click();
+    }
+    public WebElement getModalContainer(){
+        WebElement getModalContainer = driver.findElement(modalContainer);
+        return getModalContainer;
+    }
+
+    public WebElement getModalContentImage(){
+        WebElement getModalContentImage = getModalContainer().findElement(modalContentImage);
+        return getModalContentImage;
+    }
+    public WebElement getModalContentText(){
+        WebElement getModalContentText = getModalContainer().findElement(modalContentText);
+        return getModalContentText;
+    }
+
+    public WebElement getModalContentQty(){
+        WebElement getModalContentQty = getModalContainer().findElement(modalContentQty);
+        return getModalContentQty;
+    }
+
+    public WebElement getModalContentPrice(){
+        WebElement getModalContentPrice = getModalContainer().findElement(modalContentPrice);
+        return getModalContentPrice;
+    }
+    public WebElement getModalContentAmount(){
+        WebElement getModalContentAmount = getModalContainer().findElement(modalContentAmount);
+        return getModalContentAmount;
     }
 }
-
-//*[@id="root"]/div/header/div/div[3]/div[1]/table/tbody/tr[2]/td[3]/strong
