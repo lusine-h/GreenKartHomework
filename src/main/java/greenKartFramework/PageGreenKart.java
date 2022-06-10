@@ -3,7 +3,14 @@ package greenKartFramework;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.List;
+
+import static java.time.Duration.ofSeconds;
 
 public class PageGreenKart {
 
@@ -17,6 +24,7 @@ public class PageGreenKart {
     //Locate Elements
     private final By itemsQty = By.cssSelector("div.cart-info tr:nth-child(1) > td:nth-child(3) > strong");
     private final By priceItem = By.cssSelector("div.cart-info tr:nth-child(2) > td:nth-child(3) > strong");
+
     private final By cartIcon = By.cssSelector("a.cart-icon");
     private final By modalContainer = By.cssSelector("div.cart-preview.active");
     private final By modalContentImage = By.xpath(".//img[@src = './images/mango.jpg']");
@@ -25,7 +33,11 @@ public class PageGreenKart {
     private final By modalContentPrice = By.cssSelector("p.product-price");
     private final By modalContentAmount = By.cssSelector("p.amount");
 
+    private final By proceedToCheckoutBtn = By.xpath(".//button[text() = 'PROCEED TO CHECKOUT']");
 
+    public long generateRadomNumber() {
+        return Math.round(Math.random() * 100);
+    }
 
 
     //Add Mango To The Cart
@@ -43,7 +55,7 @@ public class PageGreenKart {
             }
         }
     }
-
+    //Verify Items and Price are shown as expected in the cart info (top right)
     public String getItemsQty(){
         WebElement getItemQty = driver.findElement(itemsQty);
         return getItemQty.getText();
@@ -52,6 +64,7 @@ public class PageGreenKart {
         WebElement getItemPrice = driver.findElement(priceItem);
         return getItemPrice.getText();
     }
+    //Click Cart Icon and verify modal Content Elements
     public void getCartIcon(){
         WebElement getCartIcon = driver.findElement(cartIcon);
         getCartIcon.click();
@@ -60,7 +73,6 @@ public class PageGreenKart {
         WebElement getModalContainer = driver.findElement(modalContainer);
         return getModalContainer;
     }
-
     public WebElement getModalContentImage(){
         WebElement getModalContentImage = getModalContainer().findElement(modalContentImage);
         return getModalContentImage;
@@ -69,12 +81,10 @@ public class PageGreenKart {
         WebElement getModalContentText = getModalContainer().findElement(modalContentText);
         return getModalContentText;
     }
-
     public WebElement getModalContentQty(){
         WebElement getModalContentQty = getModalContainer().findElement(modalContentQty);
         return getModalContentQty;
     }
-
     public WebElement getModalContentPrice(){
         WebElement getModalContentPrice = getModalContainer().findElement(modalContentPrice);
         return getModalContentPrice;
@@ -83,4 +93,18 @@ public class PageGreenKart {
         WebElement getModalContentAmount = getModalContainer().findElement(modalContentAmount);
         return getModalContentAmount;
     }
+    //Click on "Proceed to checkout" button
+    public void  clickOnProceedToCheckoutBtn() {
+        WebElement getProceedToCheckoutBtn = getModalContainer().findElement(proceedToCheckoutBtn);
+        getProceedToCheckoutBtn.click();
+    }
+    public String getOrderPageUrl(){
+        clickOnProceedToCheckoutBtn();
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
+        wait.until(ExpectedConditions.urlContains("cart"));
+        String actualURL = driver.getCurrentUrl();
+        return actualURL;
+    }
+
+
 }

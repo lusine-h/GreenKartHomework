@@ -24,25 +24,25 @@ import static greenKartTests.Constants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestGreenKart extends BaseTest{
+public class TestGreenKart extends BaseTest {
 
     @Test
     @DisplayName("URL")
-    public void testURL(){
+    public void testURL() {
         String actualURL = driver.getCurrentUrl();
-        assertEquals(MAIN_URL,actualURL);
+        assertEquals(MAIN_URL, actualURL);
     }
 
     @Test
     @DisplayName("Title")
-    public void testTitle(){
+    public void testTitle() {
         String actualTitle = driver.getTitle();
-        assertEquals(EXPECTED_TITLE,actualTitle);
+        assertEquals(EXPECTED_TITLE, actualTitle);
     }
 
     @Test
     @DisplayName("Add Mango to the Cart")
-    public void addMangoToCart(){
+    public void addMangoToCart() {
         homepage.addToCart();
         String qty = homepage.getItemsQty();
         String price = homepage.getItemPrice();
@@ -52,14 +52,23 @@ public class TestGreenKart extends BaseTest{
 
     @Test
     @DisplayName("Click on Cart Icon")
-    public void clickOnCartIcon(){
+    public void clickOnCartIcon() {
         homepage.addToCart();
         homepage.getCartIcon();
         assertTrue(homepage.getModalContentImage().isDisplayed());
-        assertEquals(homepage.getModalContentText().getText(),"Mango - 1 Kg");
+        assertEquals(homepage.getModalContentText().getText(), "Mango - 1 Kg");
         assertEquals(homepage.getModalContentQty().getText(), "1 No.");
-        assertEquals(homepage.getModalContentPrice().getText(),"75");
-        assertEquals(homepage.getModalContentAmount().getText(),"75");
+        assertEquals(homepage.getModalContentPrice().getText(), "75");
+        assertEquals(homepage.getModalContentAmount().getText(), "75");
+    }
+
+    @Test
+    @DisplayName("Proceed to checkout button")
+    public void clickOnProceedCheckout() {
+        homepage.addToCart();
+        homepage.getCartIcon();
+        String actualURL = homepage.getOrderPageUrl();
+        assertEquals(CART_CONTENT_PAGE_URL,actualURL);
     }
 
 }
