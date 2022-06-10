@@ -16,10 +16,13 @@ public class PageGreenKart {
 
     protected WebDriver driver;
 
+
     //Constructor
     public PageGreenKart(WebDriver driver) {
        this.driver = driver;
     }
+
+
 
     //Locate Elements
     private final By itemsQty = By.cssSelector("div.cart-info tr:nth-child(1) > td:nth-child(3) > strong");
@@ -34,6 +37,7 @@ public class PageGreenKart {
     private final By modalContentAmount = By.cssSelector("p.amount");
 
     private final By proceedToCheckoutBtn = By.xpath(".//button[text() = 'PROCEED TO CHECKOUT']");
+    private final By orderTable = By.xpath("//table[@class = 'cartTable']/ tbody");
 
     public long generateRadomNumber() {
         return Math.round(Math.random() * 100);
@@ -105,6 +109,19 @@ public class PageGreenKart {
         String actualURL = driver.getCurrentUrl();
         return actualURL;
     }
+    //Order Table
+    public boolean getOrderPageTable(){
+        WebElement table = driver.findElement(orderTable);
+        List<WebElement> rowTable = table.findElements(By.tagName("tr"));
+        int rowsCount = rowTable.size();
+//        //Loop will execute till the last row of table.
+//        for (int row = 0; row < rowsCount; row++) {
+//            List<WebElement> columnsRow = rowTable.get(row).findElements(By.tagName("td"));
+////        }
+        if (rowsCount==1) return true;
+        else{
+            return  false;
+        }
 
-
+    }
 }

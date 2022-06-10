@@ -51,7 +51,7 @@ public class TestGreenKart extends BaseTest {
     }
 
     @Test
-    @DisplayName("Click on Cart Icon")
+    @DisplayName("Click on the Cart Icon")
     public void clickOnCartIcon() {
         homepage.addToCart();
         homepage.getCartIcon();
@@ -63,12 +63,22 @@ public class TestGreenKart extends BaseTest {
     }
 
     @Test
-    @DisplayName("Proceed to checkout button")
+    @DisplayName("Is Order Page opened")
     public void clickOnProceedCheckout() {
         homepage.addToCart();
         homepage.getCartIcon();
         String actualURL = homepage.getOrderPageUrl();
         assertEquals(CART_CONTENT_PAGE_URL,actualURL);
+    }
+
+    @Test
+    @DisplayName("One item is shown in the table")
+    public void verifyTableRowSize(){
+        homepage.addToCart();
+        homepage.getCartIcon();
+        homepage.getOrderPageUrl();
+        boolean assertSize = homepage.getOrderPageTable();
+        assertTrue(assertSize);
     }
 
 }
