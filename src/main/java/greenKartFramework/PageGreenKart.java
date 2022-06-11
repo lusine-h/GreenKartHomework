@@ -16,6 +16,8 @@ public class PageGreenKart {
        this.driver = driver;
     }
 
+    WebDriverWait wait;
+
     //Locate Elements
     private final By itemsQty = By.cssSelector("div.cart-info tr:nth-child(1) > td:nth-child(3) > strong");
     private final By priceItem = By.cssSelector("div.cart-info tr:nth-child(2) > td:nth-child(3) > strong");
@@ -96,7 +98,8 @@ public class PageGreenKart {
     }
     public String getOrderPageUrl(){
         clickOnProceedToCheckoutBtn();
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
+
+        wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
         wait.until(ExpectedConditions.urlContains("cart"));
         String actualURL = driver.getCurrentUrl();
         return actualURL;
@@ -113,14 +116,11 @@ public class PageGreenKart {
     }
 
     public void clickOnPlaceOrderBtn(){
-        //WebElement getPlaceOrderProducts = driver.findElement(placeOrderProducts);
         WebElement getPlaceOrderBtn = driver.findElement(placeOrderBtn);
-        System.out.println(getPlaceOrderBtn);
         getPlaceOrderBtn.click();
     }
     public String getOrderPlacePageUrl(){
-        //clickOnPlaceOrderBtn();
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
+        wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
         wait.until(ExpectedConditions.urlContains("country"));
         String actualURL = driver.getCurrentUrl();
         System.out.println(actualURL);
