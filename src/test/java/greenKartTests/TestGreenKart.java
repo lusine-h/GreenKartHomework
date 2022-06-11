@@ -93,24 +93,23 @@ public class TestGreenKart extends BaseTest {
     }
 
     @Test
-    @DisplayName("Is Order Place Page opened")
-    public void getShadowContentSuccessText() {
+    @DisplayName("Order Placed Successfuly")
+    public void getShadowContentSuccessText() throws InterruptedException {
+        WebElement shadow;
+                String text = "Thank you, your order has been placed successfully\n" +
+                "You'll be redirected to Home page shortly!!";
+
         homepage.addToCart();
         homepage.getCartIcon();
-
-
         homepage.clickOnProceedToCheckoutBtn();
         homepage.clickOnPlaceOrderBtn();
         homepage.getOrderPlacePageUrl();
         homepage.selectCountry();
         homepage.selectAgreeCheckBox();
+        Thread.sleep(2000);
         homepage.clickOnProceed();
-
-
-
-        WebElement shadow = homepage.shadowSuccessMessage();
-        assertEquals("Thank you, your order has been placed successfully\n" +
-                "You'll be redirected to Home page shortly!!", shadow.getText());
+        shadow = homepage.shadowSuccessMessage();
+        assertEquals(text, shadow.getText());
     }
 }
 

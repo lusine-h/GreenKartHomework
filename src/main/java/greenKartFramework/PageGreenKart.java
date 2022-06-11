@@ -1,29 +1,20 @@
 package greenKartFramework;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 
-import static java.time.Duration.ofSeconds;
-
 public class PageGreenKart {
-
     protected WebDriver driver;
-
 
     //Constructor
     public PageGreenKart(WebDriver driver) {
        this.driver = driver;
     }
-
-
 
     //Locate Elements
     private final By itemsQty = By.cssSelector("div.cart-info tr:nth-child(1) > td:nth-child(3) > strong");
@@ -39,19 +30,11 @@ public class PageGreenKart {
 
     private final By proceedToCheckoutBtn = By.xpath(".//button[text() = 'PROCEED TO CHECKOUT']");
     private final By orderTable = By.xpath("//table[@class = 'cartTable']/ tbody");
-
-   // private final By placeOrderProducts = By.xpath("//div[@class = 'products']");
-
     private final By placeOrderBtn  = By.xpath("//div[@class = 'products']//button[text() = 'Place Order']");
-    //private final By placeOrderBtn  = By.xpath(".//button[text() = 'Place Order']");
+
     private final By selectCountry = By.xpath("//select/option[text() = \"Armenia\"]");
     private final By selectAgreeCheckBox = By.xpath("//input[@type = 'checkbox']");
     private final By proceedBtn = By.cssSelector("div.wrapperTwo>button");
-
-    public long generateRadomNumber() {
-        return Math.round(Math.random() * 100);
-    }
-
 
     //Add Mango To The Cart
     public void addToCart() {
@@ -123,17 +106,11 @@ public class PageGreenKart {
         WebElement table = driver.findElement(orderTable);
         List<WebElement> rowTable = table.findElements(By.tagName("tr"));
         int rowsCount = rowTable.size();
-//        //Loop will execute till the last row of table.
-//        for (int row = 0; row < rowsCount; row++) {
-//            List<WebElement> columnsRow = rowTable.get(row).findElements(By.tagName("td"));
-////        }
         if (rowsCount==1) return true;
         else{
             return  false;
         }
-
     }
-
 
     public void clickOnPlaceOrderBtn(){
         //WebElement getPlaceOrderProducts = driver.findElement(placeOrderProducts);
@@ -141,7 +118,6 @@ public class PageGreenKart {
         System.out.println(getPlaceOrderBtn);
         getPlaceOrderBtn.click();
     }
-
     public String getOrderPlacePageUrl(){
         //clickOnPlaceOrderBtn();
         WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
@@ -150,32 +126,23 @@ public class PageGreenKart {
         System.out.println(actualURL);
         return actualURL;
     }
-
     public WebElement selectCountry(){
         WebElement country = driver.findElement(selectCountry);
         country.click();
         return country;
     }
-
     public boolean selectAgreeCheckBox(){
         WebElement agreeCheckBox = driver.findElement(selectAgreeCheckBox);
         agreeCheckBox.click();
         return true;
     }
-
     public void clickOnProceed(){
         WebElement clickOnPlaceOrder = driver.findElement(proceedBtn);
         clickOnPlaceOrder.click();
     }
     public WebElement shadowSuccessMessage(){
-        WebElement shadowHost = driver.findElement(By.cssSelector("#shadow_root"));
-        JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-
-        WebElement shadowRoot = (WebElement) jsDriver.executeScript("return arguments[0].shadowRoot", shadowHost);
-        WebElement shadowContent = shadowRoot.findElement(By.cssSelector("#shadow_content"));
-        return shadowContent;
-
-
+        WebElement textSuccess = driver.
+                findElement(By.xpath("//*[contains(text(), 'Thank you, your order has been placed successfully')]"));
+        return textSuccess;
     }
-
 }
