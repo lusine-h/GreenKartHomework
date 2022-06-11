@@ -1,6 +1,7 @@
 package greenKartFramework;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
@@ -38,6 +39,14 @@ public class PageGreenKart {
 
     private final By proceedToCheckoutBtn = By.xpath(".//button[text() = 'PROCEED TO CHECKOUT']");
     private final By orderTable = By.xpath("//table[@class = 'cartTable']/ tbody");
+
+   // private final By placeOrderProducts = By.xpath("//div[@class = 'products']");
+
+    private final By placeOrderBtn  = By.xpath("//div[@class = 'products']//button[text() = 'Place Order']");
+    //private final By placeOrderBtn  = By.xpath(".//button[text() = 'Place Order']");
+    private final By selectCountry = By.xpath("//select/option[text() = \"Armenia\"]");
+    private final By selectAgreeCheckBox = By.xpath("//input[@type = 'checkbox']");
+    private final By proceedBtn = By.cssSelector("div.wrapperTwo>button");
 
     public long generateRadomNumber() {
         return Math.round(Math.random() * 100);
@@ -124,4 +133,49 @@ public class PageGreenKart {
         }
 
     }
+
+
+    public void clickOnPlaceOrderBtn(){
+        //WebElement getPlaceOrderProducts = driver.findElement(placeOrderProducts);
+        WebElement getPlaceOrderBtn = driver.findElement(placeOrderBtn);
+        System.out.println(getPlaceOrderBtn);
+        getPlaceOrderBtn.click();
+    }
+
+    public String getOrderPlacePageUrl(){
+        //clickOnPlaceOrderBtn();
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
+        wait.until(ExpectedConditions.urlContains("country"));
+        String actualURL = driver.getCurrentUrl();
+        System.out.println(actualURL);
+        return actualURL;
+    }
+
+    public WebElement selectCountry(){
+        WebElement country = driver.findElement(selectCountry);
+        country.click();
+        return country;
+    }
+
+    public boolean selectAgreeCheckBox(){
+        WebElement agreeCheckBox = driver.findElement(selectAgreeCheckBox);
+        agreeCheckBox.click();
+        return true;
+    }
+
+    public void clickOnProceed(){
+        WebElement clickOnPlaceOrder = driver.findElement(proceedBtn);
+        clickOnPlaceOrder.click();
+    }
+    public WebElement shadowSuccessMessage(){
+        WebElement shadowHost = driver.findElement(By.cssSelector("#shadow_root"));
+        JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
+
+        WebElement shadowRoot = (WebElement) jsDriver.executeScript("return arguments[0].shadowRoot", shadowHost);
+        WebElement shadowContent = shadowRoot.findElement(By.cssSelector("#shadow_content"));
+        return shadowContent;
+
+
+    }
+
 }

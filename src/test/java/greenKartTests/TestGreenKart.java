@@ -68,12 +68,12 @@ public class TestGreenKart extends BaseTest {
         homepage.addToCart();
         homepage.getCartIcon();
         String actualURL = homepage.getOrderPageUrl();
-        assertEquals(CART_CONTENT_PAGE_URL,actualURL);
+        assertEquals(CART_CONTENT_PAGE_URL, actualURL);
     }
 
     @Test
     @DisplayName("One item is shown in the table")
-    public void verifyTableRowSize(){
+    public void verifyTableRowSize() {
         homepage.addToCart();
         homepage.getCartIcon();
         homepage.getOrderPageUrl();
@@ -81,4 +81,37 @@ public class TestGreenKart extends BaseTest {
         assertTrue(assertSize);
     }
 
+    @Test
+    @DisplayName("Is Order Place Page opened")
+    public void getOrderPlaceUrl() {
+        homepage.addToCart();
+        homepage.getCartIcon();
+        homepage.getOrderPageUrl();
+        homepage.clickOnPlaceOrderBtn();
+        String actualURL =homepage.getOrderPlacePageUrl();
+        assertEquals(COUNTRY_PAGE_URL, actualURL);
+    }
+
+    @Test
+    @DisplayName("Is Order Place Page opened")
+    public void getShadowContentSuccessText() {
+        homepage.addToCart();
+        homepage.getCartIcon();
+
+
+        homepage.clickOnProceedToCheckoutBtn();
+        homepage.clickOnPlaceOrderBtn();
+        homepage.getOrderPlacePageUrl();
+        homepage.selectCountry();
+        homepage.selectAgreeCheckBox();
+        homepage.clickOnProceed();
+
+
+
+        WebElement shadow = homepage.shadowSuccessMessage();
+        assertEquals("Thank you, your order has been placed successfully\n" +
+                "You'll be redirected to Home page shortly!!", shadow.getText());
+    }
 }
+
+
