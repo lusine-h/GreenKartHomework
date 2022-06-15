@@ -1,4 +1,5 @@
 package greenKartTests;
+
 /**
  * Homework with POM
  * 1. Navigate to "https://rahulshettyacademy.com/seleniumPractise/#/" page
@@ -27,90 +28,47 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TestGreenKart extends BaseTest {
 
     @Test
-    @DisplayName("URL")
-    public void testURL() {
+    @DisplayName("Homework task with POM")
+    public void testHomeworkWithPOM() throws InterruptedException {
         String actualURL = driver.getCurrentUrl();
-        assertEquals(MAIN_URL, actualURL);
-    }
-
-    @Test
-    @DisplayName("Title")
-    public void testTitle() {
         String actualTitle = driver.getTitle();
+        assertEquals(MAIN_URL, actualURL);
         assertEquals(EXPECTED_TITLE, actualTitle);
-    }
 
-    @Test
-    @DisplayName("Add Mango to the Cart")
-    public void addMangoToCart() {
         homepage.addToCart();
         String qty = homepage.getItemsQty();
         String price = homepage.getItemPrice();
         assertEquals(qty, "1");
         assertEquals(price, "75");
-    }
 
-    @Test
-    @DisplayName("Click on the Cart Icon")
-    public void clickOnCartIcon() {
-        homepage.addToCart();
         homepage.getCartIcon();
         assertTrue(homepage.getModalContentImage().isDisplayed());
         assertEquals(homepage.getModalContentText().getText(), "Mango - 1 Kg");
         assertEquals(homepage.getModalContentQty().getText(), "1 No.");
         assertEquals(homepage.getModalContentPrice().getText(), "75");
         assertEquals(homepage.getModalContentAmount().getText(), "75");
-    }
 
-    @Test
-    @DisplayName("Is Order Page opened")
-    public void clickOnProceedCheckout() {
-        homepage.addToCart();
-        homepage.getCartIcon();
-        String actualURL = homepage.getOrderPageUrl();
-        assertEquals(CART_CONTENT_PAGE_URL, actualURL);
-    }
-
-    @Test
-    @DisplayName("One item is shown in the table")
-    public void verifyTableRowSize() {
-        homepage.addToCart();
-        homepage.getCartIcon();
-        homepage.getOrderPageUrl();
+        String actualURLCart = homepage.getOrderPageUrl();
+        assertTrue(actualURLCart.endsWith("cart"));
         boolean assertSize = homepage.getOrderPageTable();
         assertTrue(assertSize);
-    }
 
-    @Test
-    @DisplayName("Is Order Place Page opened")
-    public void getOrderPlaceUrl() {
-        homepage.addToCart();
-        homepage.getCartIcon();
-        homepage.getOrderPageUrl();
-        homepage.clickOnPlaceOrderBtn();
-        String actualURL =homepage.getOrderPlacePageUrl();
-        assertEquals(COUNTRY_PAGE_URL, actualURL);
-    }
-
-    @Test
-    @DisplayName("Order Placed Successfuly")
-    public void getShadowContentSuccessText() throws InterruptedException {
-        WebElement shadow;
-                String text = "Thank you, your order has been placed successfully\n" +
-                "You'll be redirected to Home page shortly!!";
-
-        homepage.addToCart();
-        homepage.getCartIcon();
-        homepage.clickOnProceedToCheckoutBtn();
         homepage.clickOnPlaceOrderBtn();
         homepage.getOrderPlacePageUrl();
+        String actualURLCountry =homepage.getOrderPlacePageUrl();
+        assertTrue(actualURLCountry.endsWith("country"));
+
+        WebElement shadow;
+        String text = "Thank you, your order has been placed successfully\n" +
+                "You'll be redirected to Home page shortly!!";
+
         homepage.selectCountry();
         homepage.selectAgreeCheckBox();
-        Thread.sleep(2000);
         homepage.clickOnProceed();
         shadow = homepage.shadowSuccessMessage();
         assertEquals(text, shadow.getText());
     }
 }
+
 
 

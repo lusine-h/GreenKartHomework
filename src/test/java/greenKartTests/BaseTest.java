@@ -20,7 +20,7 @@ public class BaseTest {
     protected WebDriver driver;
     protected PageGreenKart homepage;
 
-    @BeforeEach
+    @BeforeAll
     public void driverSetup(){
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
@@ -30,8 +30,9 @@ public class BaseTest {
         driver.manage().window().maximize();
         homepage = new PageGreenKart(driver);
     }
-    @AfterEach
+    @AfterAll
     public void tearDown(){
         driver.quit();
     }
 }
+

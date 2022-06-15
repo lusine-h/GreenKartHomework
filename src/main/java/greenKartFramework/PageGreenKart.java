@@ -13,30 +13,31 @@ public class PageGreenKart {
 
     //Constructor
     public PageGreenKart(WebDriver driver) {
-       this.driver = driver;
+
+        this.driver = driver;
     }
 
     WebDriverWait wait;
 
     //Locate Elements
-    private final By itemsQty = By.cssSelector("div.cart-info tr:nth-child(1) > td:nth-child(3) > strong");
-    private final By priceItem = By.cssSelector("div.cart-info tr:nth-child(2) > td:nth-child(3) > strong");
+    private final By itemsQty = By.xpath("//div[@class='cart-info']//tr[1]//strong");
+    private final By priceItem = By.xpath("//div[@class='cart-info']//tr[2]//strong");
 
-    private final By cartIcon = By.cssSelector("a.cart-icon");
-    private final By modalContainer = By.cssSelector("div.cart-preview.active");
+    private final By cartIcon = By.xpath("//a[@class = 'cart-icon']");
+    private final By modalContainer = By.xpath("//div[@class = 'cart-preview active']");
     private final By modalContentImage = By.xpath(".//img[@src = './images/mango.jpg']");
     private final By modalContentText = By.xpath(".//p[text()= 'Mango - 1 Kg']");
-    private final By modalContentQty = By.cssSelector("p.quantity");
-    private final By modalContentPrice = By.cssSelector("p.product-price");
-    private final By modalContentAmount = By.cssSelector("p.amount");
+    private final By modalContentQty = By.xpath("//p[@class = 'quantity']");
+    private final By modalContentPrice = By.xpath("//p[@class = 'product-price']");
+    private final By modalContentAmount = By.xpath("//p[@class = 'amount']");
 
-    private final By proceedToCheckoutBtn = By.xpath(".//button[text() = 'PROCEED TO CHECKOUT']");
+    private final By proceedToCheckoutBtn = By.xpath("//button[text() = 'PROCEED TO CHECKOUT']");
     private final By orderTable = By.xpath("//table[@class = 'cartTable']/ tbody");
-    private final By placeOrderBtn  = By.xpath("//div[@class = 'products']//button[text() = 'Place Order']");
+    private final By placeOrderBtn  = By.xpath("//button[text() = 'Place Order']");
 
     private final By selectCountry = By.xpath("//select/option[text() = \"Armenia\"]");
     private final By selectAgreeCheckBox = By.xpath("//input[@type = 'checkbox']");
-    private final By proceedBtn = By.cssSelector("div.wrapperTwo>button");
+    private final By proceedBtn = By.xpath("//button[text() = 'Proceed']");
 
     //Add Mango To The Cart
     public void addToCart() {
@@ -96,9 +97,8 @@ public class PageGreenKart {
         WebElement getProceedToCheckoutBtn = getModalContainer().findElement(proceedToCheckoutBtn);
         getProceedToCheckoutBtn.click();
     }
-    public String getOrderPageUrl(){
+    public String getOrderPageUrl() throws InterruptedException {
         clickOnProceedToCheckoutBtn();
-
         wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
         wait.until(ExpectedConditions.urlContains("cart"));
         String actualURL = driver.getCurrentUrl();
@@ -114,7 +114,6 @@ public class PageGreenKart {
             return  false;
         }
     }
-
     public void clickOnPlaceOrderBtn(){
         WebElement getPlaceOrderBtn = driver.findElement(placeOrderBtn);
         getPlaceOrderBtn.click();
@@ -123,7 +122,6 @@ public class PageGreenKart {
         wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
         wait.until(ExpectedConditions.urlContains("country"));
         String actualURL = driver.getCurrentUrl();
-        System.out.println(actualURL);
         return actualURL;
     }
     public WebElement selectCountry(){
@@ -146,3 +144,4 @@ public class PageGreenKart {
         return textSuccess;
     }
 }
+
