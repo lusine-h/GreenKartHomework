@@ -27,7 +27,7 @@ This is a dynamic automated test using Java Selenium, it asserts the required ta
 
 >**Required Dependancies:**  Navigate to [mvnrepository.com](https://mvnrepository.com/) and search following dependencies, next step by step copy them and paste to your POM.xml file in the ***dependencies*** section.
 >- JUnit Jupiter (Aggregator)
->- WebDriverManager ([io.github.bonigarcia](https://io.github.bonigarcia ))
+>- WebDriverManager (io.github.bonigarcia)
 >- Selenium Chrome Driver
 >- Selenium Support
 
