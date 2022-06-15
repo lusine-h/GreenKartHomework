@@ -15,16 +15,15 @@
 11. Check **"Terms & Conditions"** checkbox
 12. Click on **"Proceed"** button
 13. Assert **Success message** is shown
-
----------------------------------------------------------
+_______________________________________________________________________________________
 ### Description
 This is a dynamic automated test using Java Selenium, it asserts the required tasks listed up.
 
 
->**Technology Used:** *Java*, *Selenium*, *Maven*, *JUnit5*
-
+>**Technology Used:** *Java*, *Selenium*, *Maven*, *JUnit5* 
+>
 >**Framework Used:** *Page Object Model*
-
+>
 >**Required Dependancies:**  Navigate to [mvnrepository.com](https://mvnrepository.com/) and search following dependencies, next step by step copy them and paste to your POM.xml file in the ***dependencies*** section.
 >- JUnit Jupiter (Aggregator)
 >- WebDriverManager (io.github.bonigarcia)
