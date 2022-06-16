@@ -30,14 +30,8 @@ public class HomePage {
     private final By modalContentQty = By.xpath("//p[@class = 'quantity']");
     private final By modalContentPrice = By.xpath("//p[@class = 'product-price']");
     private final By modalContentAmount = By.xpath("//p[@class = 'amount']");
-
     private final By proceedToCheckoutBtn = By.xpath("//button[text() = 'PROCEED TO CHECKOUT']");
-    private final By orderTable = By.xpath("//table[@class = 'cartTable']/ tbody");
-    private final By placeOrderBtn  = By.xpath("//button[text() = 'Place Order']");
 
-    private final By selectCountry = By.xpath("//select/option[text() = \"Armenia\"]");
-    private final By selectAgreeCheckBox = By.xpath("//input[@type = 'checkbox']");
-    private final By proceedBtn = By.xpath("//button[text() = 'Proceed']");
 
     //Add Mango To The Cart
     public void addToCart() {
@@ -94,39 +88,11 @@ public class HomePage {
     }
     public String getOrderPageUrl() {
         clickOnProceedToCheckoutBtn();
-        wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(2000));
         wait.until(ExpectedConditions.urlContains("cart"));
         return driver.getCurrentUrl();
     }
-    //Order Table
-    public int getOrderPageTable(){
-        WebElement table = driver.findElement(orderTable);
-        List<WebElement> rowTable = table.findElements(By.tagName("tr"));
-        return rowTable.size();
-    }
-    public void clickOnPlaceOrderBtn(){
-        WebElement getPlaceOrderBtn = driver.findElement(placeOrderBtn);
-        getPlaceOrderBtn.click();
-    }
-    public String getOrderPlacePageUrl(){
-        wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
-        wait.until(ExpectedConditions.urlContains("country"));
-        return driver.getCurrentUrl();
-    }
-    public void selectCountry(){
-        WebElement country = driver.findElement(selectCountry);
-        country.click();
-    }
-    public void selectAgreeCheckBox(){
-        WebElement agreeCheckBox = driver.findElement(selectAgreeCheckBox);
-        agreeCheckBox.click();
-    }
-    public void clickOnProceed(){
-        WebElement clickOnPlaceOrder = driver.findElement(proceedBtn);
-        clickOnPlaceOrder.click();
-    }
-    public WebElement shadowSuccessMessage(){
-       return driver.findElement(By.xpath("//*[contains(text(), 'Thank you, your order has been placed successfully')]"));
-    }
+
+
 }
 

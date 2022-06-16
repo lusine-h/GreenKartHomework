@@ -29,44 +29,44 @@ public class TestGreenKart extends BaseTest {
 
     @Test
     @DisplayName("Homework task with POM")
-    public void testHomeworkWithPOM() throws InterruptedException {
+    public void testHomeworkWithPOM(){
         String actualURL = driver.getCurrentUrl();
         String actualTitle = driver.getTitle();
         assertEquals(MAIN_URL, actualURL);
         assertEquals(EXPECTED_TITLE, actualTitle);
 
-        homepage.addToCart();
-        String qty = homepage.getItemsQty();
-        String price = homepage.getItemPrice();
+        homePage.addToCart();
+        String qty = homePage.getItemsQty();
+        String price = homePage.getItemPrice();
         assertEquals(qty, "1");
         assertEquals(price, "75");
 
-        homepage.getCartIcon();
-        assertTrue(homepage.getModalContentImage().isDisplayed());
-        assertEquals(homepage.getModalContentText().getText(), "Mango - 1 Kg");
-        assertEquals(homepage.getModalContentQty().getText(), "1 No.");
-        assertEquals(homepage.getModalContentPrice().getText(), "75");
-        assertEquals(homepage.getModalContentAmount().getText(), "75");
+        homePage.getCartIcon();
+        assertTrue(homePage.getModalContentImage().isDisplayed());
+        assertEquals(homePage.getModalContentText().getText(), "Mango - 1 Kg");
+        assertEquals(homePage.getModalContentQty().getText(), "1 No.");
+        assertEquals(homePage.getModalContentPrice().getText(), "75");
+        assertEquals(homePage.getModalContentAmount().getText(), "75");
 
-        String actualURLCart = homepage.getOrderPageUrl();
+        String actualURLCart = homePage.getOrderPageUrl();
         assertTrue(actualURLCart.endsWith("cart"));
-        int assertSize = homepage.getOrderPageTable();
+        int assertSize = cartPage.getOrderPageTable();
         assertEquals(assertSize, 1);
 
-        homepage.clickOnPlaceOrderBtn();
-        homepage.getOrderPlacePageUrl();
-        String actualURLCountry =homepage.getOrderPlacePageUrl();
+        cartPage.clickOnPlaceOrderBtn();
+        countryPage.getOrderPlacePageUrl();
+        String actualURLCountry =countryPage.getOrderPlacePageUrl();
         assertTrue(actualURLCountry.endsWith("country"));
 
-        WebElement shadow;
+        WebElement message;
         String text = "Thank you, your order has been placed successfully\n" +
                 "You'll be redirected to Home page shortly!!";
 
-        homepage.selectCountry();
-        homepage.selectAgreeCheckBox();
-        homepage.clickOnProceed();
-        shadow = homepage.shadowSuccessMessage();
-        assertEquals(text, shadow.getText());
+        countryPage.selectCountry();
+        countryPage.selectAgreeCheckBox();
+        countryPage.clickOnProceed();
+        message = countryPage.successMessage();
+        assertEquals(text, message.getText());
     }
 }
 

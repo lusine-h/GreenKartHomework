@@ -1,6 +1,8 @@
 package greenKartTests;
 
 
+import greenKartFramework.CartPage;
+import greenKartFramework.CountryPage;
 import greenKartFramework.HomePage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
@@ -14,7 +16,9 @@ import static greenKartTests.Constants.MAIN_URL;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BaseTest {
     protected WebDriver driver;
-    protected HomePage homepage;
+    protected HomePage homePage;
+    protected CartPage cartPage;
+    protected CountryPage countryPage;
 
     @BeforeAll
     public void driverSetup(){
@@ -24,7 +28,9 @@ public class BaseTest {
         driver.get(MAIN_URL);
 
         driver.manage().window().maximize();
-        homepage = new HomePage(driver);
+        homePage = new HomePage(driver);
+        cartPage = new CartPage(driver);
+        countryPage = new CountryPage(driver);
     }
     @AfterAll
     public void tearDown(){
