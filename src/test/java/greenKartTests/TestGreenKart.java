@@ -50,8 +50,8 @@ public class TestGreenKart extends BaseTest {
 
         String actualURLCart = homepage.getOrderPageUrl();
         assertTrue(actualURLCart.endsWith("cart"));
-        boolean assertSize = homepage.getOrderPageTable();
-        assertTrue(assertSize);
+        int assertSize = homepage.getOrderPageTable();
+        assertEquals(assertSize, 1);
 
         homepage.clickOnPlaceOrderBtn();
         homepage.getOrderPlacePageUrl();

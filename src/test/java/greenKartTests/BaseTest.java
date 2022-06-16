@@ -1,24 +1,20 @@
 package greenKartTests;
 
 
-import greenKartFramework.PageGreenKart;
+import greenKartFramework.HomePage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Time;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 import static greenKartTests.Constants.MAIN_URL;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BaseTest {
     protected WebDriver driver;
-    protected PageGreenKart homepage;
+    protected HomePage homepage;
 
     @BeforeAll
     public void driverSetup(){
@@ -28,7 +24,7 @@ public class BaseTest {
         driver.get(MAIN_URL);
 
         driver.manage().window().maximize();
-        homepage = new PageGreenKart(driver);
+        homepage = new HomePage(driver);
     }
     @AfterAll
     public void tearDown(){

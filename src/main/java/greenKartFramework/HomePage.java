@@ -8,11 +8,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class PageGreenKart {
+public class HomePage {
     protected WebDriver driver;
 
     //Constructor
-    public PageGreenKart(WebDriver driver) {
+    public HomePage(WebDriver driver) {
 
         this.driver = driver;
     }
@@ -69,50 +69,40 @@ public class PageGreenKart {
         getCartIcon.click();
     }
     public WebElement getModalContainer(){
-        WebElement getModalContainer = driver.findElement(modalContainer);
-        return getModalContainer;
+        return driver.findElement(modalContainer);
     }
     public WebElement getModalContentImage(){
-        WebElement getModalContentImage = getModalContainer().findElement(modalContentImage);
-        return getModalContentImage;
+        return getModalContainer().findElement(modalContentImage);
     }
     public WebElement getModalContentText(){
-        WebElement getModalContentText = getModalContainer().findElement(modalContentText);
-        return getModalContentText;
+        return getModalContainer().findElement(modalContentText);
     }
     public WebElement getModalContentQty(){
-        WebElement getModalContentQty = getModalContainer().findElement(modalContentQty);
-        return getModalContentQty;
+        return getModalContainer().findElement(modalContentQty);
     }
     public WebElement getModalContentPrice(){
-        WebElement getModalContentPrice = getModalContainer().findElement(modalContentPrice);
-        return getModalContentPrice;
+        return getModalContainer().findElement(modalContentPrice);
+
     }
     public WebElement getModalContentAmount(){
-        WebElement getModalContentAmount = getModalContainer().findElement(modalContentAmount);
-        return getModalContentAmount;
+        return getModalContainer().findElement(modalContentAmount);
     }
     //Click on "Proceed to checkout" button
     public void  clickOnProceedToCheckoutBtn() {
         WebElement getProceedToCheckoutBtn = getModalContainer().findElement(proceedToCheckoutBtn);
         getProceedToCheckoutBtn.click();
     }
-    public String getOrderPageUrl() throws InterruptedException {
+    public String getOrderPageUrl() {
         clickOnProceedToCheckoutBtn();
         wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
         wait.until(ExpectedConditions.urlContains("cart"));
-        String actualURL = driver.getCurrentUrl();
-        return actualURL;
+        return driver.getCurrentUrl();
     }
     //Order Table
-    public boolean getOrderPageTable(){
+    public int getOrderPageTable(){
         WebElement table = driver.findElement(orderTable);
         List<WebElement> rowTable = table.findElements(By.tagName("tr"));
-        int rowsCount = rowTable.size();
-        if (rowsCount==1) return true;
-        else{
-            return  false;
-        }
+        return rowTable.size();
     }
     public void clickOnPlaceOrderBtn(){
         WebElement getPlaceOrderBtn = driver.findElement(placeOrderBtn);
@@ -121,27 +111,22 @@ public class PageGreenKart {
     public String getOrderPlacePageUrl(){
         wait = new WebDriverWait(driver,Duration.ofSeconds(2000));
         wait.until(ExpectedConditions.urlContains("country"));
-        String actualURL = driver.getCurrentUrl();
-        return actualURL;
+        return driver.getCurrentUrl();
     }
-    public WebElement selectCountry(){
+    public void selectCountry(){
         WebElement country = driver.findElement(selectCountry);
         country.click();
-        return country;
     }
-    public boolean selectAgreeCheckBox(){
+    public void selectAgreeCheckBox(){
         WebElement agreeCheckBox = driver.findElement(selectAgreeCheckBox);
         agreeCheckBox.click();
-        return true;
     }
     public void clickOnProceed(){
         WebElement clickOnPlaceOrder = driver.findElement(proceedBtn);
         clickOnPlaceOrder.click();
     }
     public WebElement shadowSuccessMessage(){
-        WebElement textSuccess = driver.
-                findElement(By.xpath("//*[contains(text(), 'Thank you, your order has been placed successfully')]"));
-        return textSuccess;
+       return driver.findElement(By.xpath("//*[contains(text(), 'Thank you, your order has been placed successfully')]"));
     }
 }
 
