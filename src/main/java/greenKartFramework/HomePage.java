@@ -10,14 +10,13 @@ import java.util.List;
 
 public class HomePage {
     protected WebDriver driver;
+    WebDriverWait wait;
+    List<WebElement> listOfItems;
 
     //Constructor
     public HomePage(WebDriver driver) {
-
         this.driver = driver;
     }
-
-    WebDriverWait wait;
 
     //Locate Elements
     private final By itemsQty = By.xpath("//div[@class='cart-info']//tr[1]//strong");
@@ -32,18 +31,19 @@ public class HomePage {
     private final By modalContentAmount = By.xpath("//p[@class = 'amount']");
     private final By proceedToCheckoutBtn = By.xpath("//button[text() = 'PROCEED TO CHECKOUT']");
 
+    public int generateRandomNumber() {
+        listOfItems = driver.findElements(By.cssSelector("h4.product-name"));
+        return  (int)Math.round(Math.random() * listOfItems.size());
+    }
 
     //Add Mango To The Cart
-    public void addToCart() {
-        String addItem = "Mango";
-        List<WebElement> listOfItems = driver.findElements(By.cssSelector("h4.product-name"));
+    public void addToCart(int index) {
         for (int i = 0; i < listOfItems.size(); i++) {
             listOfItems = driver.findElements(By.cssSelector("h4.product-name"));
-            String[] productName = listOfItems.get(i).getText().split("-");
-            String trimName = productName[0].trim();
-
-           if (addItem.equals(trimName)) {
-               WebElement mangoBtn = listOfItems.get(i).findElement(By.xpath("//div[@class = 'product'][18]//child::button"));
+//            String[] productName = listOfItems.get(i).getText().split("-");
+//            String trimName = productName[0].trim();
+           if (index==i) {
+                WebElement mangoBtn = listOfItems.get(i).findElement(By.xpath("//div[@class = 'product'][" + i + "]//child::button"));
                mangoBtn.click();
             }
         }
