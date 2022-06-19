@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomePage {
@@ -32,30 +33,41 @@ public class HomePage {
     private final By proceedToCheckoutBtn = By.xpath("//button[text() = 'PROCEED TO CHECKOUT']");
 
     public int generateRandomNumber() {
-        listOfItems = driver.findElements(By.cssSelector("h4.product-name"));
+        listOfItems = driver.findElements(By.xpath("//h4[@class = 'product-name']"));
         return  (int)Math.round(Math.random() * listOfItems.size());
     }
 
-    //Add Mango To The Cart
-    public void addToCart(int index) {
+    //Add Item Into Cart
+    public List<String> addItemIntoCart(int index) {
+        String price = "";
+        String qty = "";
+        String text = "";
         for (int i = 0; i < listOfItems.size(); i++) {
-            listOfItems = driver.findElements(By.cssSelector("h4.product-name"));
-//            String[] productName = listOfItems.get(i).getText().split("-");
-//            String trimName = productName[0].trim();
-           if (index==i) {
+            listOfItems = driver.findElements(By.xpath("//h4[@class = 'product-name']"));
+            if (index == i) {
                 WebElement mangoBtn = listOfItems.get(i).findElement(By.xpath("//div[@class = 'product'][" + i + "]//child::button"));
-               mangoBtn.click();
+                WebElement getQty = listOfItems.get(i).findElement(By.xpath("//div[@class= 'product'][" + i + "]//child::input"));
+                WebElement getPrice = listOfItems.get(i).findElement(By.xpath("//div[@class= 'product'][" + i + "]//child::p"));
+                WebElement getText = listOfItems.get(i).findElement(By.xpath("//div[@class= 'product'][" + i + "]//child::h4"));
+                price = getPrice.getText();
+                qty = getQty.getAttribute("value");
+                text = getText.getText();
+                mangoBtn.click();
             }
         }
+        return Arrays.asList(qty, price, text);
     }
+
     //Verify Items and Price are shown as expected in the cart info (top right)
     public String getItemsQty(){
         WebElement getItemQty = driver.findElement(itemsQty);
-        return getItemQty.getText();
+       String qty = getItemQty.getText();
+        return qty;
     }
     public String getItemPrice(){
         WebElement getItemPrice = driver.findElement(priceItem);
-        return getItemPrice.getText();
+        String price = getItemPrice.getText();
+        return price;
     }
     //Click Cart Icon and verify modal Content Elements
     public void getCartIcon(){
@@ -68,7 +80,14 @@ public class HomePage {
     public WebElement getModalContentImage(){
         return getModalContainer().findElement(modalContentImage);
     }
-    public WebElement getModalContentText(){
+
+    public String getModalContentImageMatch(){
+        WebElement match = getModalContainer().findElement(modalContentImage);
+        return match.getAttribute("src");
+    }
+
+
+        public WebElement getModalContentText(){
         return getModalContainer().findElement(modalContentText);
     }
     public WebElement getModalContentQty(){

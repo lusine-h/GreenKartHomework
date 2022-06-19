@@ -21,6 +21,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 import static greenKartTests.Constants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,20 +38,28 @@ public class TestGreenKart extends BaseTest {
         assertEquals(EXPECTED_TITLE, actualTitle);
 
         int randomItem = homePage.generateRandomNumber();
-        homePage.addToCart(randomItem);
+        List<String> aa = homePage.addItemIntoCart(randomItem);
+        String pageQty = aa.get(0);
+        String pagePrice = aa.get(1);
+        String itemText = aa.get(2);
+        int total = Integer.valueOf(pageQty) * Integer.valueOf(pagePrice);
         String qty = homePage.getItemsQty();
         String price = homePage.getItemPrice();
+
+
         System.out.println(qty + " & " + price);
-//        assertEquals(qty, "1");
-//        assertEquals(price, "75");
-//
-//        homePage.getCartIcon();
-//        assertTrue(homePage.getModalContentImage().isDisplayed());
-//        assertEquals(homePage.getModalContentText().getText(), "Mango - 1 Kg");
-//        assertEquals(homePage.getModalContentQty().getText(), "1 No.");
-//        assertEquals(homePage.getModalContentPrice().getText(), "75");
-//        assertEquals(homePage.getModalContentAmount().getText(), "75");
-//
+        assertEquals(qty, pageQty);
+        assertEquals(price,pagePrice);
+
+        homePage.getCartIcon();
+        assertTrue(homePage.getModalContentImage().isDisplayed());
+        assertTrue(homePage.getModalContentImageMatch().contains(itemText));
+
+        assertEquals(homePage.getModalContentText().getText(), itemText);
+        assertEquals(homePage.getModalContentQty().getText(), pageQty+ " No.");
+        assertEquals(homePage.getModalContentPrice().getText(), pagePrice);
+        assertEquals(homePage.getModalContentAmount().getText(), String.valueOf(total));
+
 //        String actualURLCart = homePage.getOrderPageUrl();
 //        assertTrue(actualURLCart.endsWith("cart"));
 //        int assertSize = cartPage.getOrderPageTable();
