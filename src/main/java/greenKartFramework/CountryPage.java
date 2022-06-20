@@ -6,11 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.util.List;
 
 public class CountryPage {
 
     protected WebDriver driver;
     WebDriverWait wait;
+    List<WebElement> listOfCountries;
 
     private final By selectCountry = By.xpath("//select/option[text() = \"Armenia\"]");
     private final By selectAgreeCheckBox = By.xpath("//input[@type = 'checkbox']");
@@ -20,16 +22,27 @@ public class CountryPage {
     public CountryPage(WebDriver driver) {
         this.driver = driver;
     }
+
     //Get Country page URL
     public String getOrderPlacePageUrl(){
         wait = new WebDriverWait(driver, Duration.ofSeconds(2000));
         wait.until(ExpectedConditions.urlContains("country"));
         return driver.getCurrentUrl();
     }
+    //Generate random Country
+    public int generateRandomCountry() {
+        listOfCountries = driver.findElements(By.xpath("//select//option"));
+        return (int) Math.round(Math.random() * listOfCountries.size());
+    }
     //Choose Country
-    public void selectCountry(){
-        WebElement country = driver.findElement(selectCountry);
-        country.click();
+    public void selectCountry(int index){
+            for (int i = 0; i < listOfCountries.size(); i++) {
+                listOfCountries = driver.findElements(By.xpath("//select//option"));
+                if (index == i) {
+                    WebElement selectedCountryIs = listOfCountries.get(i).findElement(By.xpath("//select//option[" + i + "]"));
+                    selectedCountryIs.click();
+                }
+            }
     }
     // Agree to the Terms & Conditions
     public void selectAgreeCheckBox(){

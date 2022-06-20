@@ -38,10 +38,10 @@ public class TestGreenKart extends BaseTest {
         assertEquals(EXPECTED_TITLE, actualTitle);
 
         int randomItem = homePage.generateRandomNumber();
-        List<String> aa = homePage.addItemIntoCart(randomItem);
-        String pageQty = aa.get(0);
-        String pagePrice = aa.get(1);
-        String itemText = aa.get(2);
+        List<String> chosenItem = homePage.addItemIntoCart(randomItem);
+        String pageQty = chosenItem.get(0);
+        String pagePrice = chosenItem.get(1);
+        String itemText = chosenItem.get(2);
         int total = Integer.valueOf(pageQty) * Integer.valueOf(pagePrice);
         String qty = homePage.getItemsQty();
         String price = homePage.getItemPrice();
@@ -71,7 +71,8 @@ public class TestGreenKart extends BaseTest {
         String text = "Thank you, your order has been placed successfully\n" +
                 "You'll be redirected to Home page shortly!!";
 
-        countryPage.selectCountry();
+        int randomCountry = countryPage.generateRandomCountry();
+        countryPage.selectCountry(randomCountry);
         countryPage.selectAgreeCheckBox();
         countryPage.clickOnProceed();
         message = countryPage.successMessage();

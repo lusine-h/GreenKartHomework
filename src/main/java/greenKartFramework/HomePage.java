@@ -1,9 +1,5 @@
 package greenKartFramework;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,7 +13,6 @@ public class HomePage {
     protected WebDriver driver;
     WebDriverWait wait;
     List<WebElement> listOfItems;
-    List<WebElement> listOfContainerItems;
 
     //Constructor
     public HomePage(WebDriver driver) {
@@ -61,7 +56,6 @@ public class HomePage {
         }
         return Arrays.asList(qty, price, text);
     }
-
 
     //Verify Items and Price are shown as expected in the cart info (top right)
     public String getItemsQty(){
@@ -109,7 +103,6 @@ public class HomePage {
     }
     public WebElement getModalContentPrice(){
         return getModalContainer().findElement(modalContentPrice);
-
     }
     public WebElement getModalContentAmount(){
         return getModalContainer().findElement(modalContentAmount);
@@ -125,7 +118,6 @@ public class HomePage {
         wait.until(ExpectedConditions.urlContains("cart"));
         return driver.getCurrentUrl();
     }
-
-
 }
+
 
