@@ -35,7 +35,6 @@ public class HomePage {
         listOfItems = driver.findElements(By.xpath("//h4[@class = 'product-name']"));
         return (int) Math.round(Math.random() * listOfItems.size());
     }
-
     //Add Item Into Cart
     public List<String> addItemIntoCart(int index) {
         String price = "";
@@ -56,7 +55,6 @@ public class HomePage {
         }
         return Arrays.asList(qty, price, text);
     }
-
     //Verify Items and Price are shown as expected in the cart info (top right)
     public String getItemsQty(){
         WebElement getItemQty = driver.findElement(itemsQty);

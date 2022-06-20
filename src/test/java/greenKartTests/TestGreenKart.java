@@ -32,11 +32,13 @@ public class TestGreenKart extends BaseTest {
     @Test
     @DisplayName("Homework task with POM")
     public void testHomeworkWithPOM(){
+        //assert true URL, TITLE
         String actualURL = driver.getCurrentUrl();
         String actualTitle = driver.getTitle();
         assertEquals(MAIN_URL, actualURL);
         assertEquals(EXPECTED_TITLE, actualTitle);
 
+        //assert Home Page items
         int randomItem = homePage.generateRandomNumber();
         List<String> chosenItem = homePage.addItemIntoCart(randomItem);
         String pageQty = chosenItem.get(0);
@@ -49,6 +51,7 @@ public class TestGreenKart extends BaseTest {
         assertEquals(qty, pageQty);
         assertEquals(price,pagePrice);
 
+        //assert Cart Page items
         homePage.getCartIcon();
         homePage.getContainerImages();
         assertEquals(homePage.getContainerImages(), false);
@@ -62,6 +65,7 @@ public class TestGreenKart extends BaseTest {
         int assertSize = cartPage.getOrderPageTable();
         assertEquals(assertSize, 1);
 
+        //assert Country Page items
         cartPage.clickOnPlaceOrderBtn();
         countryPage.getOrderPlacePageUrl();
         String actualURLCountry =countryPage.getOrderPlacePageUrl();
