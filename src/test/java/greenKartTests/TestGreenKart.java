@@ -45,11 +45,12 @@ public class TestGreenKart extends BaseTest {
         String pagePrice = chosenItem.get(1);
         String itemText = chosenItem.get(2);
         int total = Integer.valueOf(pageQty) * Integer.valueOf(pagePrice);
-        String qty = homePage.getItemsQty();
-        String price = homePage.getItemPrice();
+        List<String> cartTopRightItems = homePage.getCartTopRightInfo();
+        String expectedQty = cartTopRightItems.get(0);
+        String expectedPrice = cartTopRightItems.get(1);
 
-        assertEquals(qty, pageQty);
-        assertEquals(price,pagePrice);
+        assertEquals(expectedQty, pageQty);
+        assertEquals(expectedPrice,pagePrice);
 
         //assert Cart Page items
         homePage.getCartIcon();
@@ -83,6 +84,7 @@ public class TestGreenKart extends BaseTest {
         assertEquals(text, message.getText());
     }
 }
+
 
 
 

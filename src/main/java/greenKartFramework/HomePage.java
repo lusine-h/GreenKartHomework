@@ -13,15 +13,12 @@ public class HomePage {
     protected WebDriver driver;
     WebDriverWait wait;
     List<WebElement> listOfItems;
+    List<WebElement> listOfCartTopRightInfo;
 
     //Constructor
     public HomePage(WebDriver driver) {
         this.driver = driver;
     }
-
-    //Locate Elements
-    private final By itemsQty = By.xpath("//div[@class='cart-info']//tr[1]//strong");
-    private final By priceItem = By.xpath("//div[@class='cart-info']//tr[2]//strong");
 
     private final By cartIcon = By.xpath("//a[@class = 'cart-icon']");
     private final By modalContainer = By.xpath("//div[@class = 'cart-preview active']");
@@ -40,7 +37,7 @@ public class HomePage {
         String price = "";
         String qty = "";
         String text = "";
-        for (int i = 0; i < listOfItems.size(); i++) {
+         for (int i = 0; i < listOfItems.size(); i++) {
             listOfItems = driver.findElements(By.xpath("//h4[@class = 'product-name']"));
             if (index == i) {
                 WebElement addBtn = listOfItems.get(i).findElement(By.xpath("//div[@class = 'product'][" + i + "]//child::button"));
@@ -56,15 +53,25 @@ public class HomePage {
         return Arrays.asList(qty, price, text);
     }
     //Verify Items and Price are shown as expected in the cart info (top right)
-    public String getItemsQty(){
-        WebElement getItemQty = driver.findElement(itemsQty);
-       String qty = getItemQty.getText();
-        return qty;
-    }
-    public String getItemPrice(){
-        WebElement getItemPrice = driver.findElement(priceItem);
-        String price = getItemPrice.getText();
-        return price;
+    public List<String> getCartTopRightInfo(){
+        String qty = "";
+        String price = "";
+        listOfCartTopRightInfo = driver.findElements(By.xpath("//div[@class='cart-info']//tbody//tr"));
+        for (int i = 0; i < listOfCartTopRightInfo.size(); i++) {
+            switch(i) {
+                case 0:
+                    WebElement wQty = listOfCartTopRightInfo.get(i).findElement(By.xpath("//div[@class='cart-info']//tbody//tr[" + (i+1) + "]//strong"));
+                    qty = wQty.getText();
+                    //System.out.println("qty = "+qty);
+                    break;
+                case 1:
+                    WebElement wPrice = listOfCartTopRightInfo.get(i).findElement(By.xpath("//div[@class='cart-info']//tbody//tr[" + (i+1)+ "]//strong"));
+                   price =  wPrice.getText();
+                    //System.out.println("price = " + price);
+                    break;
+            }
+        }
+        return Arrays.asList(qty,price);
     }
     //Click Cart Icon and verify modal Content Elements
     public void getCartIcon(){
