@@ -21,6 +21,7 @@ public class HomePage {
     }
 
     private final By cartIcon = By.xpath("//a[@class = 'cart-icon']");
+    private final By cartTopRightItems = By.xpath("//div[@class='cart-info']//tbody//tr");
     private final By modalContainer = By.xpath("//div[@class = 'cart-preview active']");
     private final By modalContentText= By.xpath(".//p[@class = 'product-name']");
     private final By modalContentQty = By.xpath("//p[@class = 'quantity']");
@@ -56,18 +57,17 @@ public class HomePage {
     public List<String> getCartTopRightInfo(){
         String qty = "";
         String price = "";
-        listOfCartTopRightInfo = driver.findElements(By.xpath("//div[@class='cart-info']//tbody//tr"));
+        listOfCartTopRightInfo = driver.findElements(cartTopRightItems);
         for (int i = 0; i < listOfCartTopRightInfo.size(); i++) {
             switch(i) {
                 case 0:
-                    WebElement wQty = listOfCartTopRightInfo.get(i).findElement(By.xpath("//div[@class='cart-info']//tbody//tr[" + (i+1) + "]//strong"));
+                   WebElement wQty = listOfCartTopRightInfo.get(i).findElement(By.xpath("//div[@class='cart-info']//tbody//tr[" + (i+1) + "]//strong"));
+                   //WebElement wQty = listOfCartTopRightInfo.get(i).findElement(By.xpath(cartTopRightItems + "[" + (i+1) + "]//strong"));
                     qty = wQty.getText();
-                    //System.out.println("qty = "+qty);
                     break;
                 case 1:
                     WebElement wPrice = listOfCartTopRightInfo.get(i).findElement(By.xpath("//div[@class='cart-info']//tbody//tr[" + (i+1)+ "]//strong"));
-                   price =  wPrice.getText();
-                    //System.out.println("price = " + price);
+                    price =  wPrice.getText();
                     break;
             }
         }
