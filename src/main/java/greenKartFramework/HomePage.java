@@ -1,5 +1,9 @@
 package greenKartFramework;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +17,7 @@ public class HomePage {
     protected WebDriver driver;
     WebDriverWait wait;
     List<WebElement> listOfItems;
+    List<WebElement> listOfContainerItems;
 
     //Constructor
     public HomePage(WebDriver driver) {
@@ -25,8 +30,7 @@ public class HomePage {
 
     private final By cartIcon = By.xpath("//a[@class = 'cart-icon']");
     private final By modalContainer = By.xpath("//div[@class = 'cart-preview active']");
-    private final By modalContentImage = By.xpath(".//img[@src = './images/mango.jpg']");
-    private final By modalContentText = By.xpath(".//p[text()= 'Mango - 1 Kg']");
+    private final By modalContentText= By.xpath(".//p[@class = 'product-name']");
     private final By modalContentQty = By.xpath("//p[@class = 'quantity']");
     private final By modalContentPrice = By.xpath("//p[@class = 'product-price']");
     private final By modalContentAmount = By.xpath("//p[@class = 'amount']");
@@ -34,7 +38,7 @@ public class HomePage {
 
     public int generateRandomNumber() {
         listOfItems = driver.findElements(By.xpath("//h4[@class = 'product-name']"));
-        return  (int)Math.round(Math.random() * listOfItems.size());
+        return (int) Math.round(Math.random() * listOfItems.size());
     }
 
     //Add Item Into Cart
@@ -45,18 +49,19 @@ public class HomePage {
         for (int i = 0; i < listOfItems.size(); i++) {
             listOfItems = driver.findElements(By.xpath("//h4[@class = 'product-name']"));
             if (index == i) {
-                WebElement mangoBtn = listOfItems.get(i).findElement(By.xpath("//div[@class = 'product'][" + i + "]//child::button"));
+                WebElement addBtn = listOfItems.get(i).findElement(By.xpath("//div[@class = 'product'][" + i + "]//child::button"));
                 WebElement getQty = listOfItems.get(i).findElement(By.xpath("//div[@class= 'product'][" + i + "]//child::input"));
                 WebElement getPrice = listOfItems.get(i).findElement(By.xpath("//div[@class= 'product'][" + i + "]//child::p"));
                 WebElement getText = listOfItems.get(i).findElement(By.xpath("//div[@class= 'product'][" + i + "]//child::h4"));
                 price = getPrice.getText();
                 qty = getQty.getAttribute("value");
                 text = getText.getText();
-                mangoBtn.click();
+                addBtn.click();
             }
         }
         return Arrays.asList(qty, price, text);
     }
+
 
     //Verify Items and Price are shown as expected in the cart info (top right)
     public String getItemsQty(){
@@ -77,17 +82,26 @@ public class HomePage {
     public WebElement getModalContainer(){
         return driver.findElement(modalContainer);
     }
-    public WebElement getModalContentImage(){
-        return getModalContainer().findElement(modalContentImage);
+    //Get container images list
+    public boolean getContainerImages() {
+        boolean isBrokenImage = false;
+
+        try {
+            List<WebElement> image_list = getModalContainer().findElements(By.tagName("img"));
+            for (WebElement img : image_list) {
+                if (img != null) {
+                    if (img.getAttribute("naturalWidth").equals("0")) {
+                        isBrokenImage = true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return isBrokenImage;
     }
-
-    public String getModalContentImageMatch(){
-        WebElement match = getModalContainer().findElement(modalContentImage);
-        return match.getAttribute("src");
-    }
-
-
-        public WebElement getModalContentText(){
+    public WebElement getModalContentText(){
         return getModalContainer().findElement(modalContentText);
     }
     public WebElement getModalContentQty(){

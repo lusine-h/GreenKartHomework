@@ -46,39 +46,36 @@ public class TestGreenKart extends BaseTest {
         String qty = homePage.getItemsQty();
         String price = homePage.getItemPrice();
 
-
-        System.out.println(qty + " & " + price);
         assertEquals(qty, pageQty);
         assertEquals(price,pagePrice);
 
         homePage.getCartIcon();
-        assertTrue(homePage.getModalContentImage().isDisplayed());
-        assertTrue(homePage.getModalContentImageMatch().contains(itemText));
-
+        homePage.getContainerImages();
+        assertEquals(homePage.getContainerImages(), false);
         assertEquals(homePage.getModalContentText().getText(), itemText);
         assertEquals(homePage.getModalContentQty().getText(), pageQty+ " No.");
         assertEquals(homePage.getModalContentPrice().getText(), pagePrice);
         assertEquals(homePage.getModalContentAmount().getText(), String.valueOf(total));
 
-//        String actualURLCart = homePage.getOrderPageUrl();
-//        assertTrue(actualURLCart.endsWith("cart"));
-//        int assertSize = cartPage.getOrderPageTable();
-//        assertEquals(assertSize, 1);
-//
-//        cartPage.clickOnPlaceOrderBtn();
-//        countryPage.getOrderPlacePageUrl();
-//        String actualURLCountry =countryPage.getOrderPlacePageUrl();
-//        assertTrue(actualURLCountry.endsWith("country"));
-//
-//        WebElement message;
-//        String text = "Thank you, your order has been placed successfully\n" +
-//                "You'll be redirected to Home page shortly!!";
-//
-//        countryPage.selectCountry();
-//        countryPage.selectAgreeCheckBox();
-//        countryPage.clickOnProceed();
-//        message = countryPage.successMessage();
-//        assertEquals(text, message.getText());
+        String actualURLCart = homePage.getOrderPageUrl();
+        assertTrue(actualURLCart.endsWith("cart"));
+        int assertSize = cartPage.getOrderPageTable();
+        assertEquals(assertSize, 1);
+
+        cartPage.clickOnPlaceOrderBtn();
+        countryPage.getOrderPlacePageUrl();
+        String actualURLCountry =countryPage.getOrderPlacePageUrl();
+        assertTrue(actualURLCountry.endsWith("country"));
+
+        WebElement message;
+        String text = "Thank you, your order has been placed successfully\n" +
+                "You'll be redirected to Home page shortly!!";
+
+        countryPage.selectCountry();
+        countryPage.selectAgreeCheckBox();
+        countryPage.clickOnProceed();
+        message = countryPage.successMessage();
+        assertEquals(text, message.getText());
     }
 }
 
